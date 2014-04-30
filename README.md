@@ -45,8 +45,6 @@ notes:
 
 3. the result is saved locally as "result\_yourtreefilename"
 
-4. have not yet added "EPSILON" into this version
-
 
 * multi-processes:
 

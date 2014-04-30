@@ -39,6 +39,7 @@ int THREADS = 6;  // threads # used
 long int SAMPLE = 0;  // number of chromosomes
 long int TOTAL = 0;  // this is the maximum index of the matrix
 char * NEXUSTREE = NULL;  // the file name in string format
+double EPSILON = 0.01;
 
 pthread_t thread[10];  // by now we support at most 9 threads for computation, one for reporting
 int FINISH_TABLE[9];  // if present thread not over, 0; else, 1; after counted, 2
@@ -563,7 +564,7 @@ void cal_during_par(package * space, int tree_start, long int num)
 						}
 						else
 						{
-							if((node_double->element - *(space->tMRCA_last[name])) > 0.01 || (node_double->element - *(space->tMRCA_last[name])) < -0.01)
+							if((node_double->element - *(space->tMRCA_last[name])) > EPSILON || (node_double->element - *(space->tMRCA_last[name])) < -EPSILON)
 							{//give tolerance to errors due to data transformation
 								// longer enough or not
 								if(*(space->seq) != 1 && *(space->mark[name]) == 0)  // lazy evaluation, so it's safe
@@ -1096,7 +1097,7 @@ void combine(package * p1, package * p2)
 		for(j = i+1; j <= SAMPLE; j++)
 		{
 			long int name = (i - 1) * SAMPLE + j - 1;
-			if((*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) > 0.01 || (*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) < -0.01)
+			if((*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) > EPSILON || (*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) < -EPSILON)
 			{
 				if(*(space2->breakpoint_start[TOTAL - name]) - *(space2->breakpoint_start[name]) > CUTOFF)
 				{
@@ -1136,7 +1137,7 @@ void combine_all(package p[])
 				if(*(space2->mark[name]) == 0 && s != THREADS-2)
 				{
 					// judge whether there is a tMRCA change between these two parts
-					if((*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) > 0.01 || (*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) < -0.01)
+					if((*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) > EPSILON || (*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) < -EPSILON)
 					{
 						if(*(space2->breakpoint_start[name]) - *(space1->breakpoint_last[name]) > CUTOFF)
 							{
@@ -1152,7 +1153,7 @@ void combine_all(package p[])
 					if(s == THREADS-2 && *(space2->mark[name]) == 0)
 					{
 						// the last part has no tMRCA change for this pair
-						if((*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) > 0.01 || (*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) < -0.01)
+						if((*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) > EPSILON || (*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) < -EPSILON)
 						{
 							if(string_long(END) - *(space2->breakpoint_start[name]) > CUTOFF)
 							{
@@ -1180,7 +1181,7 @@ void combine_all(package p[])
 								IBD_sender(name, *(space2->breakpoint_last[name]), string_long(END));
 							}
 						}
-						if((*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) > 0.01 || (*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) < -0.01)
+						if((*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) > EPSILON || (*(space1->tMRCA_last[name]) - *(space2->tMRCA_last[TOTAL - name])) < -EPSILON)
 						{
 							if(*(space2->breakpoint_start[TOTAL - name]) - *(space2->breakpoint_start[name]) > CUTOFF)
 							{
@@ -1210,9 +1211,10 @@ void combine_all(package p[])
 void input_error()
 {
 	printf("The parameters you entered are not in right format. Please keep the following format:\n");
-	printf("./IBDReport -f TREE_FILE -m CUTOFF -d DISCRETIZATION -l LENGTH_OF_CHROMOSOME -t NUMBER_OF_THREADS\n");
+	printf("./IBDReport -f TREE_FILE -m CUTOFF -e EPSILON -d DISCRETIZATION -l LENGTH_OF_CHROMOSOME -t NUMBER_OF_THREADS\n");
 	printf("The default values are:\n");
 	printf("CUTOFF: %d\n", 0);
+	printf("EPSILON: %f\n", 0.01);
 	printf("DISCRETIZATION: %d\n", 0);
 	printf("LENGTH_OF_CHROMOSOME: %d\n", 100000000);
 	printf("NUMBER_OF_THREADS: %d\n", 6);
@@ -1253,6 +1255,11 @@ int main(int argc, const char * argv[])
 					case 'm':{
 						count++;
 						CUTOFF = string_long((char *)argv[count]);
+						break;
+					}
+					case 'e':{
+						count++;
+						EPSILON = string_double((char *)argv[count]);
 						break;
 					}
 					case 'd':{
