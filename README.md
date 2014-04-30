@@ -27,6 +27,7 @@ Run
 
 ./IBDReport -f TREE\_FILE -m CUTOFF -d DISCRETIZATION -l LENGTH\_OF\_CHROMOSOME -t NUMBER\_OF\_THREADS
 
+-------------------------------------------------------------------------------
 -f: file name, in present working directory
 
 -m: cutoff value; defining the effective IBD segment length
@@ -36,6 +37,8 @@ Run
 -l: length of chromosome; we need enter this manually because we can't get the total length of chromosome in Nexus tree
 
 -t: number of working threads for IBD detection; as there is a main thread and a IBD report thread, so you'd better use [your computer's core number minus 2] as the number of working threads
+
+-------------------------------------------------------------------------------
 
 notes:
 
@@ -54,6 +57,7 @@ or
 
 "other program generating stdout" | mpirun -n 1 IBDReport\_mp -F 2 -t 2 -e 0.000001 -m 0 -d 0 -l 100000000
 
+-------------------------------------------------------------------------------
 -f: file name, in present working directory
 
 -F: format of trees; 1 -> Nexus; 2-> Newick
@@ -67,6 +71,7 @@ or
 -d: discretization value; for speeding up
 
 -l: length of chromosomes; needed for Nexus trees
+-------------------------------------------------------------------------------
 
 notes:
 
