@@ -52,6 +52,8 @@ notes:
 
 mpirun -n 16 IBDReport\_mp -f test\_1000G\_50I\_100Million.trees -F 1 -t 1 -e 0.01 -m 50000 -d 0 -l 100000000
 
+or
+
 "other program generating stdout" | mpirun -n 1 IBDReport\_mp -F 2 -t 2 -e 0.000001 -m 0 -d 0 -l 100000000
 
 -f: file name, in present working directory
@@ -82,4 +84,4 @@ notes:
 
 Contact
 ========
-If you have any problems during using this program, or there are some bugs, please contact me: sdmorrisys@gmail.com
+If you have any problems during using this program, please contact me: sdmorrisys@gmail.com
