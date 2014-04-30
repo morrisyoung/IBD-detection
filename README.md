@@ -3,7 +3,7 @@ IBD-detection
 
 Introduction
 ========
-This is the IBD detection algorithm and implementations. One version for multi-threads, one version for multi-processes (OpenMPI). Matlab script is also attached for your sanity checks.
+This is the IBD detection algorithm and implementations. One version for multi-threads, one version for multi-processes (OpenMPI). Matlab script is also attached for your sanity checks. Also, if you are in Columbia, you can use the run\_mp.sh to submit your jobs in C2B2 clusters.
 
 Compile
 ========
@@ -13,9 +13,9 @@ gcc -o IBDReport\_mt IBDReport\_mt.c -lpthread -lm
 
 * multi-processes:
 
-\1. install the OpenMPI into your computer;
+1. install the OpenMPI into your computer;
 
-\2. compile:
+2. compile:
 
 PC: mpicc -o IBDReport\_mp IBDReport\_mp.c -lm
 
@@ -39,13 +39,13 @@ Run
 
 note:
 
-\1. this version is not fully optimized for memory usage (access), so the running speed may be a little slow
+1. this version is not fully optimized for memory usage (access), so the running speed may be a little slow
 
-\2. this version doesn't support Newick format trees and reading trees from STDIN presently, which are all supported in multi-processes version
+2. this version doesn't support Newick format trees and reading trees from STDIN presently, which are all supported in multi-processes version
 
-\3. the result is saved locally as "result\_yourtreefilename"
+3. the result is saved locally as "result\_yourtreefilename"
 
-\4. have not yet add "EPSILON" into this version
+4. have not yet add "EPSILON" into this version
 
 
 * multi-processes:
@@ -70,13 +70,13 @@ mpirun -n 16 IBDReport\_mp -f test\_1000G\_50I\_100Million.trees -F 1 -t 1 -e 0.
 
 note:
 
-\1. this version is fully optimized both in memory usage and in parallelism, so it is highly recommanded to use, even if you only need 2-3 processes
+1. this version is fully optimized both in memory usage and in parallelism, so it is highly recommanded to use, even if you only need 2-3 processes
 
-\2. for the Newick trees, as presently I only try the trees from MaCS's stdout, so actually "-F 2" and " -t 2" are binded together; so if you want try Newick trees, please use MaCS and read them from stdin; later on the "-F" will be fixed as a sepatate parameter, and also for "-t"
+2. for the Newick trees, as presently I only try the trees from MaCS's stdout, so actually "-F 2" and " -t 2" are binded together; so if you want try Newick trees, please use MaCS and read them from stdin; later on the "-F" will be fixed as a sepatate parameter, and also for "-t"
 
-\3. as I just finished reading newick trees from MaCS's stdout, no more sanity checks have been performed by now, although it should be right logically; so reading nexus trees from outside files is more recommanded presently
+3. as I just finished reading newick trees from MaCS's stdout, no more sanity checks have been performed by now, although it should be right logically; so reading nexus trees from outside files is more recommanded presently
 
-\4. as the MPI program is invoked by the "mpirun" excutable, if you need n working processing, please invoke n+1 processes; but this is not for reading trees from stdin, in which you should invoke only 1 proess
+4. as the MPI program is invoked by the "mpirun" excutable, if you need n working processing, please invoke n+1 processes; but this is not for reading trees from stdin, in which you should invoke only 1 proess
 
 Contact
 ========
