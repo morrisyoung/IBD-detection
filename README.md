@@ -71,6 +71,7 @@ or
 -d: discretization value; for speeding up
 
 -l: length of chromosomes; needed for Nexus trees
+
 -------------------------------------------------------------------------------
 
 notes:
