@@ -3,7 +3,7 @@ IBD-detection
 
 Introduction
 ========
-This is the IBD detection algorithm and implementations. One version for multi-threads, one version for multi-processes (OpenMPI). Matlab script (and its result with cutoff=50,000) is also attached for your sanity checks. Also, if you are in Columbia, you can use the run\_mp.sh to submit your OpenMPI jobs in C2B2 clusters.
+This is the IBD detection algorithm and implementations. One version for multi-threads, one version for multi-processes (OpenMPI). Matlab script (and its result with cutoff=50,000 for the attached Nexus trees) is also attached for your sanity checks. Also, if you are in Columbia, you can use the run\_mp.sh to submit your OpenMPI jobs in C2B2 clusters.
 
 Compile
 ========
